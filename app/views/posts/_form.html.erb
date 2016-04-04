@@ -18,12 +18,16 @@
 
 <div id="nested-fields" class="row">
 	<%= f.fields_for :attachments do |ff| %>
-	<div class="col-sm-4">
+	<div class="col-xs-6 col-sm-4 col-md-3">
 		<div class="thumbnail">
 			<div class="embed-responsive embed-responsive-16by9">
 				<% unless ff.object.persisted? %>
 
-				<div class="input-group input-group-lg">
+				<p class="lead text-center">
+					Select a File
+				</p>
+
+				<div class="input-group input-group-md">
 					<span class="input-group-btn">
 						<span class="btn btn-info btn-file">
 							Browse... <%= ff.file_field :attachment %>
