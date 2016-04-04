@@ -3,7 +3,6 @@
 <% if @post.errors.any? %>
 <div id="error_explanation">
 	<strong><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</strong>
-
 	<ul>
 		<% @post.errors.full_messages.each do |message| %>
 		<li><%= message %></li>
@@ -23,8 +22,16 @@
 		<div class="thumbnail">
 			<div class="embed-responsive embed-responsive-16by9">
 				<% unless ff.object.persisted? %>
-				<%= ff.file_field :attachment %>
-				<%#= ff.hidden_field :attachment_cache %>
+
+				<div class="input-group input-group-lg">
+					<span class="input-group-btn">
+						<span class="btn btn-info btn-file">
+							Browse... <%= ff.file_field :attachment %>
+						</span>
+					</span>
+					<input type="text" class="form-control" readonly>
+				</div>
+
 				<% else %>
 				<%= image_tag ff.object.attachment.url(:thumb), class: 'img-responsive center-block' %>
 				<% end %>
