@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
 	resources :attachments
 
+	resources :posts
 	resources :posts, path: :portfolio
 
 end
