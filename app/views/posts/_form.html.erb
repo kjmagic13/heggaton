@@ -1,0 +1,52 @@
+<%= nested_form_for @post, html: { multipart: true } do |f| %>
+
+<% if @post.errors.any? %>
+<div id="error_explanation">
+	<strong><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</strong>
+
+	<ul>
+		<% @post.errors.full_messages.each do |message| %>
+		<li><%= message %></li>
+		<% end %>
+	</ul>
+</div>
+<% end %>
+
+<div class="form-group form-group-lg">
+	<%= f.label :name %>
+	<%= f.text_field :name, class: 'form-control' %>
+</div>
+
+<div id="nested-fields" class="row">
+	<%= f.fields_for :attachments do |ff| %>
+	<div class="col-sm-4">
+		<div class="thumbnail">
+			<div class="embed-responsive embed-responsive-16by9">
+				<% unless ff.object.persisted? %>
+				<%= ff.file_field :attachment %>
+				<%#= ff.hidden_field :attachment_cache %>
+				<% else %>
+				<%= image_tag ff.object.attachment.url(:thumb), class: 'img-responsive center-block' %>
+				<% end %>
+			</div>
+			<p class="help-block">
+				<% if ff.object.persisted? %>
+				<%= ff.link_to_remove '<i class="fa fa-fw fa-remove"></i> Remove'.html_safe, data: {confirm: 'Are you sure?'} %>
+				<% else %>
+				<%= ff.link_to_remove '<i class="fa fa-fw fa-remove"></i> Remove'.html_safe %>
+				<% end %>
+			</p>
+		</div>
+	</div>
+	<% end %>
+</div>
+
+<p class="text-right">
+	<%= f.link_to_add '<i class="fa fa-fw fa-plus"></i> Add Attachment'.html_safe, :attachments, class: 'btn btn-default btn-sm', data: { target: '#nested-fields'} %>
+</p>
+
+<div class="form-group">
+	<%= f.submit nil, class: 'btn btn-primary' %>
+</div>
+
+<% end %>
